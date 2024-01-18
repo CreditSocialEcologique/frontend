@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  cse-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:3000"
+    networks:
+      - cse-network
+
+networks:
+  cse-network:
+    driver: bridge
