@@ -35,11 +35,12 @@ const config = {
       colors: {
         'dark': '#222222',
         'light': '#8F8F8F',
-        'tabs-header-bg': '#D9D9D9'
+        'tabs-header-bg': '#D9D9D9',
+        'mobile': '#D9E8ED'
       }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),  require('@tailwindcss/line-clamp'),],
 } satisfies Config
 
 export default config

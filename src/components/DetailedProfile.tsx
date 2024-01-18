@@ -11,7 +11,7 @@ type InfoDetailRowType = {
     value: string
 }
 
-function InfoDetailRow({label, value}: InfoDetailRowType) {
+export function InfoDetailRow({label, value}: InfoDetailRowType) {
     return (
         <div className={"flex items-start justify-start w-full pl-4 min-h-[35px]"}>
             <p className={"text-md font-bold text-light uppercase min-w-[200px]"}>{label}</p>
@@ -25,17 +25,18 @@ type CardType = {
     prefix?: string,
     title: string,
     description?: string,
+    version?: "mobile" | "desktop"
 }
 
-function Card({icon, prefix, title, description}: CardType) {
+export function Card({icon, prefix, title, description, version = "desktop"}: CardType) {
     return (
         <div className={"flex items-center gap-8 py-2 px-4 bg-white rounded-2xl shadow shadow-xl h-[70px]"}>
             <Image src={icon} alt={"icon"} className={"ml-4 aspect-square w-[20px] h-[20px] object-contain"} width={30}
                    height={30}/>
             <div className={"flex flex-col"}>
                 <div className={"flex items-center justify-start gap-2"}>
-                    {prefix && <span className={"text-lg text-dark uppercase font-bold"}>{prefix}</span>}
-                    <span className={"text-lg text-dark"}>{title}</span>
+                    {prefix && version === "desktop" && <span className={"text-lg text-dark uppercase font-bold"}>{prefix}</span>}
+                    <span className={"text-lg text-dark line-clamp-2 leading-tight"}>{title}</span>
                 </div>
                 {description && <span className={"text-md text-light"}>{description}</span>}
             </div>
@@ -80,10 +81,10 @@ export default function DetailedProfile() {
 
             <div className={"bg-white rounded-2xl shadow shadow-2xl col-start-2 row-span-1 flex p-4"}>
                 <div className={"flex items-center justify-center w-1/3 h-full"}>
-                    <CicularScore score={globalScore}/>
+                    <CicularScore score={globalScore} version={"big"}/>
                 </div>
                 <div className={"flex flex-col items-center justify-center w-2/3 h-full"}>
-                    <DetailedScore score={user?.score}/>
+                    <DetailedScore score={user?.score} version={"desktop"}/>
                 </div>
             </div>
 

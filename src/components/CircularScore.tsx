@@ -1,5 +1,6 @@
 type CicularScoreType = {
-    score: number
+    score: number,
+    version: "big" | "little"
 }
 
 export enum SCORE_COLORS {
@@ -10,7 +11,7 @@ export enum SCORE_COLORS {
     backgroundDark = "#8F8F8F"
 }
 
-export default function CicularScore({score}: CicularScoreType) {
+export default function CicularScore({score, version = "big"}: CicularScoreType) {
     const percentage = score / 1000 * 100;
     const strokeWidth = 5;
     const radius = 45;
@@ -43,9 +44,18 @@ export default function CicularScore({score}: CicularScoreType) {
                     transform="rotate(-90 50 50)"
                 />
             </svg>
-            <div className="absolute inset-0 flex items-center justify-center flex flex-col justify-center items-center">
-                <span className="text-6xl font-bold text-black">{score}</span>
-                <span className="text-lg font-bold text-light uppercase">points</span>
+            <div
+                className="absolute inset-0 flex items-center justify-center flex flex-col justify-center items-center">
+                {version === "big" ? <>
+                        <span className="text-6xl font-bold text-black">{score}</span>
+                        <span className="text-lg font-bold text-light uppercase">points</span>
+                    </>
+                    :
+                    <>
+                        <span className="text-4xl font-bold text-black">{score}</span>
+                        <span className="text-lg font-bold text-light uppercase">points</span>
+                    </>
+                }
             </div>
         </div>
     );
