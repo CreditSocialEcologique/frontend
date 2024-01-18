@@ -26,7 +26,7 @@ export type UserType = {
 export default function Home() {
     const users = useQuery({
         queryKey: ["users"],
-        queryFn: () => fetch('http://localhost:8080/api/users').then(res => res.json())
+        queryFn: () => fetch('http://intensif05.ecole.ensicaen.fr:8080/api/users').then(res => res.json())
     })
 
     if (users.isLoading) return <p>Loading...</p>
