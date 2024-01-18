@@ -3,6 +3,8 @@
 import Image from 'next/image'
 import React from "react";
 import {useRouter} from "next/navigation";
+import {useQuery} from "@tanstack/react-query";
+import {UserType} from "@/app/page";
 
 export default function Login() {
     const {push} = useRouter()
@@ -16,6 +18,26 @@ export default function Login() {
 
     const handleFirstnameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFirstname(event.target.value)
+    }
+
+    const users = useQuery({
+        queryKey: ["users"],
+        queryFn: () => fetch('http://localhost:8080/api/users').then(res => res.json())
+    })
+
+    if (users.isLoading) return <p>Loading...</p>
+
+    if (users.isError) return <p>Error</p>
+
+    const usersData = users.data as UserType[]
+
+    const login = () => {
+        const user = usersData.find(user => user.nom === lastname && user.prenom === firstname)
+        if (user) {
+            push(`/client/app/${user.id}`)
+        } else {
+            alert("Utilisateur non trouvé")
+        }
     }
 
     return (
@@ -40,9 +62,7 @@ export default function Login() {
 
 
             <button
-                onClick={() => {
-                    void push("/client/app")
-                }}
+                onClick={login}
                 className="text-white font-bold py-2 px-4 rounded-full mt-20 bg-[#0B1E2D] uppercase">
                 Se connecter
             </button>

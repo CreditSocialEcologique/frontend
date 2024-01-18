@@ -3,12 +3,12 @@ import {SCORE_COLORS} from "@/components/CircularScore";
 type DetailedScoreType = {
     version: "mobile" | "desktop",
     score: {
-        transportation_efficiency: number,
-        energy_conservation: number,
-        sustainable_food_choices: number,
-        noise_pollution_reduction: number,
-        light_pollution_management: number,
-        biodiversity_protection: number
+        scoreTransport: number,
+        scoreAlimentation: number,
+        scoreEnergie: number,
+        biodiversityProtectionScore: number,
+        nuisanceSonore: number,
+        pollutionLumineuse: number
     }
 }
 
@@ -33,28 +33,28 @@ const ScoreSection = ({title, score, version}: ScoreSectionType) => {
 
 export default function DetailedScore({score, version = "desktop"}: DetailedScoreType) {
     const {
-        transportation_efficiency,
-        energy_conservation,
-        sustainable_food_choices,
-        noise_pollution_reduction,
-        light_pollution_management,
-        biodiversity_protection
+        scoreTransport,
+        scoreAlimentation,
+        scoreEnergie,
+        biodiversityProtectionScore,
+        nuisanceSonore,
+        pollutionLumineuse
     } = score;
 
     return (
         <div className="flex flex-col gap-4 w-full p-4">
             {/* Transportation Efficiency */}
-            <ScoreSection title="Transport" score={transportation_efficiency} version={version}/>
+            <ScoreSection title="Transport" score={scoreTransport} version={version}/>
             {/* Energy Conservation */}
-            <ScoreSection title="Energie" score={energy_conservation} version={version}/>
+            <ScoreSection title="Energie" score={scoreEnergie} version={version}/>
             {/* Sustainable Food Choices */}
-            <ScoreSection title="Alimentation" score={sustainable_food_choices} version={version}/>
+            <ScoreSection title="Alimentation" score={scoreAlimentation} version={version}/>
             {/* Noise Pollution Reduction */}
-            <ScoreSection title="Nuisance sonore" score={noise_pollution_reduction} version={version}/>
+            <ScoreSection title="Nuisance sonore" score={nuisanceSonore} version={version}/>
             {/* Light Pollution Management */}
-            <ScoreSection title="Pollution lumineuse" score={light_pollution_management} version={version}/>
+            <ScoreSection title="Pollution lumineuse" score={pollutionLumineuse} version={version}/>
             {/* Biodiversity Protection */}
-            <ScoreSection title="Protection de la biodiversité" score={biodiversity_protection} version={version}/>
+            <ScoreSection title="Protection de la biodiversité" score={biodiversityProtectionScore} version={version}/>
         </div>
     )
 }

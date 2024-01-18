@@ -1,10 +1,9 @@
 import {useUser} from "@/contexts/UserContext";
-import data from '../../mock-data.json'
 import Image from "next/image";
-import moment from "moment";
 import CicularScore from "@/components/CircularScore";
 import DetailedScore from "@/components/DetailedScore";
 import {Tabs, TabsContent, TabsList, TabsTrigger,} from "@/components/ui/tabs"
+import {UserType} from "@/app/page";
 
 type InfoDetailRowType = {
     label: string
@@ -44,10 +43,14 @@ export function Card({icon, prefix, title, description, version = "desktop"}: Ca
     )
 }
 
-export default function DetailedProfile() {
+type DetailedProfileProps = {
+    usersData: UserType[]
+}
+
+export default function DetailedProfile({usersData}: DetailedProfileProps) {
     const {user: userId} = useUser()
 
-    const user = data.find((user) => user.id === userId)
+    const user = usersData.find((user) => user.id === userId)
 
     if (!user) return (
         <div className={"p-8 w-full h-full flex items-center justify-center"}>
@@ -59,7 +62,18 @@ export default function DetailedProfile() {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
-    const globalScore = Math.round(Object.values(user?.score).reduce((a, b) => a + b, 0) / Object.values(user?.score).length)
+    const {scoreTransport, scoreAlimentation, scoreEnergie, biodiversityProtectionScore, nuisanceSonore, pollutionLumineuse} = user;
+
+    const globalScore = Math.round((scoreTransport + scoreAlimentation + scoreEnergie + biodiversityProtectionScore + nuisanceSonore + pollutionLumineuse) / 6)
+
+    const scoreObject = {
+        scoreTransport,
+        scoreAlimentation,
+        scoreEnergie,
+        biodiversityProtectionScore,
+        nuisanceSonore,
+        pollutionLumineuse
+    }
 
     return (
         <div className={"grid grid-rows-[2fr_1fr_2fr] grid-cols-[1fr_2fr] gap-8 p-8 h-screen w-full"}>
@@ -69,13 +83,13 @@ export default function DetailedProfile() {
                        width={600}
                        height={600}
                        className={"rounded-full aspect-square w-[150px] h-[150px] object-cover shadow shadow-xl"}/>
-                <h3 className={"text-4xl font-bold my-2 text-dark truncate"}>{user?.firstname} <span
-                    className={"uppercase"}>{user?.lastname}</span></h3>
+                <h3 className={"text-4xl font-bold my-2 text-dark truncate"}>{user?.prenom} <span
+                    className={"uppercase"}>{user?.nom}</span></h3>
                 <InfoDetailRow label={"Age"}
-                               value={moment().diff(moment(user?.birthdate, "DD-MM-YYYY"), 'years') + "  (" + user?.birthdate + ")"}/>
+                               value={user?.age + "  (" + user?.dateNaissance + ")"}/>
                 <InfoDetailRow label={"Mobile"} value={user?.mobile}/>
-                <InfoDetailRow label={"Address"} value={user?.address}/>
-                <InfoDetailRow label={"Bank Account"} value={user?.bank}/>
+                <InfoDetailRow label={"Address"} value={user?.adresse}/>
+                <InfoDetailRow label={"Bank Account"} value={user?.compteBancaire}/>
                 <InfoDetailRow label={"Current Position"} value={"Caen"}/>
             </div>
 
@@ -84,7 +98,7 @@ export default function DetailedProfile() {
                     <CicularScore score={globalScore} version={"big"}/>
                 </div>
                 <div className={"flex flex-col items-center justify-center w-2/3 h-full"}>
-                    <DetailedScore score={user?.score} version={"desktop"}/>
+                    <DetailedScore score={scoreObject} version={"desktop"}/>
                 </div>
             </div>
 

@@ -11,10 +11,10 @@
   "dependencies": {
     "@radix-ui/react-tabs": "^1.0.4",
     "@tailwindcss/line-clamp": "^0.4.4",
+    "@tanstack/react-query": "^5.17.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.311.0",
-    "moment": "^2.30.1",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
@@ -22,6 +22,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.17.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

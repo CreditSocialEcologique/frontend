@@ -1,13 +1,19 @@
 import {useState} from "react";
-import data from '../../mock-data.json'
 import {useUser} from "@/contexts/UserContext";
+import {UserType} from "@/app/page";
 
-export default function Aside() {
+type AsideProps = {
+    usersData: UserType[]
+}
+
+export default function Aside({usersData}: AsideProps) {
     const {setUser} = useUser()
     const [input, setInput] = useState('')
 
-    const filteredData = data.filter((user) => {
-        return user.firstname.toLowerCase().includes(input.toLowerCase()) || user.lastname.toLowerCase().includes(input.toLowerCase())
+    console.log(usersData)
+
+    const filteredData = usersData.filter((user) => {
+        return user.nom.toLowerCase().includes(input.toLowerCase()) || user.prenom.toLowerCase().includes(input.toLowerCase())
     })
 
     return (
@@ -19,7 +25,7 @@ export default function Aside() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                 />
-                <div className={"flex flex-col items-center justify-center mt-10 gap-2 w-full"}>
+                <div className={"flex flex-col items-center justify-center mt-10 gap-2 w-full max-h-[800px] overflow-y-scroll no-scrollbar"}>
                     {filteredData.map((user, index) => (
                         <button
                             className="flex items-start justify-start w-full p-2 rounded-md w-full"
@@ -28,8 +34,8 @@ export default function Aside() {
                             style={{
                                 background: index % 2 === 0 ? 'rgba(0,0,0,0.25)' : 'rgba(0,0,0,0.05)'
                             }}>
-                            <p className="text-lg">{user.lastname}</p>
-                            <p className="text-md ml-2 text-light">{user.firstname}</p>
+                            <p className="text-lg">{user.nom}</p>
+                            <p className="text-md ml-2 text-light">{user.prenom}</p>
                         </button>
                     ))}
                 </div>
